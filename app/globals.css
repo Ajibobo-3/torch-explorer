@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #080808;
+  --color-gold: #d4af37;
+  --color-gold-light: #dfc472;
+  --color-gold-dark: #734b00;
+  --color-emerald: #50c878;
+
+  --background-image-glass: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.01)
+  );
+}
+
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-gold-dark);
+  }
+  
+  body {
+    background-color: var(--color-obsidian);
+    color: white;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Specificity Overrides for Solana Wallet Library */
+@layer components {
+  /* Using the library's exact class name to force our branding */
+  .wallet-adapter-button.luxury-wallet-button {
+    background-color: var(--color-gold) !important;
+    color: var(--color-obsidian) !important;
+    font-family: inherit !important;
+    @apply font-black uppercase tracking-tighter px-6 py-2 rounded-xl transition-all shadow-lg;
+  }
+
+  .wallet-adapter-button.luxury-wallet-button:not([disabled]):hover {
+    background-color: var(--color-gold-light) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+  }
+
+  /* Styling the actual SVG icon inside the button */
+  .wallet-adapter-button-start-icon {
+    @apply mr-3 scale-110 opacity-80;
+  }
+}
+
+/* Standard utility for other luxury elements */
+@utility glass-panel {
+  @apply bg-glass border border-white/10 backdrop-blur-md rounded-2xl;
+}
