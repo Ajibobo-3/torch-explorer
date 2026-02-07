@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import AgentCard from '@/components/AgentCard';
-import SubmissionModal from '@/components/SubmissionModal'; // Import our new modal
+import SubmissionModal from '@/components/SubmissionModal';
 import { TorchAgent } from '@/types/torch';
 
 const MOCK_AGENTS: TorchAgent[] = [
@@ -16,7 +16,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [selectedTier, setSelectedTier] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal control state
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function fetchTorchData() {
@@ -41,13 +41,12 @@ export default function Home() {
   });
 
   return (
-    <main className="min-h-screen bg-obsidian text-white p-12">
+    <main className="min-h-screen bg-obsidian text-white p-8 md:p-12">
       <nav className="flex justify-between items-center mb-20 max-w-6xl mx-auto">
         <h1 className="text-gold font-black tracking-tighter text-xl italic underline decoration-gold/30">
           TORCH_CONTRIBUTOR_v1
         </h1>
         <div className="flex items-center gap-4">
-          {/* Action Button for Early Contributors */}
           <button 
             onClick={() => setIsModalOpen(true)}
             className="text-[10px] font-bold text-gold border border-gold/20 px-4 py-2 rounded-lg hover:bg-gold/10 transition-all uppercase tracking-widest hidden md:block"
@@ -59,7 +58,7 @@ export default function Home() {
       </nav>
 
       <div className="max-w-6xl mx-auto mb-12 flex flex-col items-center gap-6">
-        <h2 className="text-5xl font-black tracking-tighter uppercase italic text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20">
+        <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase italic text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20 text-center">
           Protocol Explorer
         </h2>
         
@@ -74,12 +73,12 @@ export default function Home() {
           />
         </div>
 
-        <div className="flex bg-white/5 p-1 rounded-xl border border-white/10 backdrop-blur-sm">
+        <div className="flex flex-wrap justify-center bg-white/5 p-1 rounded-xl border border-white/10 backdrop-blur-sm">
           {['All', 'Emerald', 'Blue', 'Yellow'].map((tier) => (
             <button
               key={tier}
               onClick={() => setSelectedTier(tier)}
-              className={`px-6 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
+              className={`px-4 md:px-6 py-2 rounded-lg text-[9px] md:text-[10px] font-bold uppercase tracking-widest transition-all duration-300 ${
                 selectedTier === tier 
                 ? 'bg-gold text-obsidian shadow-[0_0_20px_rgba(212,175,55,0.4)]' 
                 : 'text-white/40 hover:text-white hover:bg-white/5'
@@ -93,7 +92,7 @@ export default function Home() {
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {loading ? (
-          <div className="col-span-3 text-center py-20 text-gold animate-pulse font-mono tracking-widest uppercase text-xs">
+          <div className="col-span-full text-center py-20 text-gold animate-pulse font-mono tracking-widest uppercase text-xs">
             Authenticating Protocol...
           </div>
         ) : filteredAgents.length > 0 ? (
@@ -107,7 +106,7 @@ export default function Home() {
             />
           ))
         ) : (
-          <div className="col-span-3 text-center py-24 border border-dashed border-white/10 rounded-3xl">
+          <div className="col-span-full text-center py-24 border border-dashed border-white/10 rounded-3xl">
             <p className="text-white/20 uppercase text-[10px] tracking-[0.3em] font-bold">
               No entities found in this sector
             </p>
@@ -115,7 +114,6 @@ export default function Home() {
         )}
       </div>
 
-      {/* Submission Modal Hookup */}
       <SubmissionModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </main>
   );
