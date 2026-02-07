@@ -1,21 +1,30 @@
-/* Specificity Overrides for Solana Wallet Library */
+@import "tailwindcss";
+
+/* ... keep your existing color variables here ... */
+:root {
+  --color-gold: #D4AF37;
+  --color-gold-light: #F3D26E;
+  --color-obsidian: #080808;
+}
+
 @layer components {
+  /* This specific line fixes the build error */
+  @reference "tailwindcss";
+
   .wallet-adapter-button.luxury-wallet-button {
     background-color: var(--color-gold) !important;
     color: var(--color-obsidian) !important;
     font-family: inherit !important;
     border-radius: 0.75rem !important;
-    /* Added focus-visible for accessibility */
-    @apply font-black uppercase tracking-tighter px-6 py-2 transition-all shadow-lg outline-none focus-visible:ring-2 focus-visible:ring-gold/50 focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian;
+    @apply font-black uppercase tracking-tighter px-6 py-2 transition-all shadow-lg outline-none;
   }
 
   .wallet-adapter-button.luxury-wallet-button:not([disabled]):hover {
-    background-color: #F3D26E !important; /* Direct hex for 'gold-light' if variable isn't set */
+    background-color: var(--color-gold-light) !important;
     transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); /* Increased glow for the screenshot */
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
   }
 
-  /* Ensures the Solana logo doesn't stay purple/white */
   .wallet-adapter-button-start-icon svg path {
     fill: var(--color-obsidian) !important;
   }
