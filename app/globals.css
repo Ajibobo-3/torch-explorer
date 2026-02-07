@@ -1,31 +1,27 @@
 @import "tailwindcss";
 
-/* ... keep your existing color variables here ... */
-:root {
+@theme {
   --color-gold: #D4AF37;
   --color-gold-light: #F3D26E;
   --color-obsidian: #080808;
 }
 
+/* Force the Obsidian background and White text on the entire site */
+@layer base {
+  body {
+    @apply bg-obsidian text-white antialiased;
+    background-color: #080808; /* Fallback */
+  }
+}
+
 @layer components {
-  /* This specific line fixes the build error */
   @reference "tailwindcss";
 
   .wallet-adapter-button.luxury-wallet-button {
-    background-color: var(--color-gold) !important;
-    color: var(--color-obsidian) !important;
-    font-family: inherit !important;
-    border-radius: 0.75rem !important;
-    @apply font-black uppercase tracking-tighter px-6 py-2 transition-all shadow-lg outline-none;
+    background-color: #D4AF37 !important;
+    color: #080808 !important;
+    @apply font-black uppercase tracking-tighter px-6 py-2 transition-all shadow-lg;
   }
-
-  .wallet-adapter-button.luxury-wallet-button:not([disabled]):hover {
-    background-color: var(--color-gold-light) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-  }
-
-  .wallet-adapter-button-start-icon svg path {
-    fill: var(--color-obsidian) !important;
-  }
+  
+  /* ... rest of your pulse and card styles ... */
 }

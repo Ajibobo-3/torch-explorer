@@ -14,11 +14,13 @@ const MOCK_AGENTS: TorchAgent[] = [
 export default function Home() {
   const [agents, setAgents] = useState<TorchAgent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false); // Prevents hydration flicker/white screen
   const [selectedTier, setSelectedTier] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     async function fetchTorchData() {
       try {
         const response = await fetch('https://torch-market-api.vercel.app/api/agents');
@@ -40,9 +42,12 @@ export default function Home() {
     return matchesTier && matchesSearch;
   });
 
+  // If not mounted, render a black screen to maintain the "Obsidian" feel during load
+  if (!mounted) return <div className="min-h-screen bg-obsidian" />;
+
   return (
     <main className="min-h-screen bg-obsidian text-white p-8 md:p-12">
-      <div className="max-w-7xl mx-auto"> {/* Added max-w-7xl for better large-screen framing */}
+      <div className="max-w-7xl mx-auto">
         <nav className="flex justify-between items-center mb-20">
           <h1 className="text-gold font-black tracking-tighter text-xl italic underline decoration-gold/30">
             TORCH_CONTRIBUTOR_v1
@@ -54,7 +59,6 @@ export default function Home() {
             >
               + Register Agent
             </button>
-            {/* The luxury class here works in tandem with your CSS overrides */}
             <WalletMultiButton className="luxury-wallet-button" />
           </div>
         </nav>
